@@ -5,8 +5,8 @@
     <meta charset="UTF-8" />
     <title>QBT_TR(Add Torrent Links)QBT_TR[CONTEXT=downloadFromURL]</title>
     <link rel="stylesheet" href="css/style.css?v=${CACHEID}" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="css/nightwalker.css?v=${CACHEID}" />
     <link rel="stylesheet" href="css/Window.css?v=${CACHEID}" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="css/nightwalker.css?v=${CACHEID}" />
     <script src="scripts/lib/MooTools-Core-1.6.0-compat-compressed.js"></script>
     <script src="scripts/lib/MooTools-More-1.6.0-compat-compressed.js"></script>
     <script src="scripts/download.js?v=${CACHEID}"></script>
@@ -29,8 +29,8 @@
                         </td>
                         <td>
                             <select id="autoTMM" name="autoTMM" onchange="qBittorrent.Download.changeTMM(this)">
-                                <option selected value="false">Manual</option>
-                                <option value="true">Automatic</option>
+                                <option selected value="false">QBT_TR(Manual)QBT_TR[CONTEXT=AddNewTorrentDialog]</option>
+                                <option value="true">QBT_TR(Automatic)QBT_TR[CONTEXT=AddNewTorrentDialog]</option>
                             </select>
                         </td>
                     </tr>
@@ -78,6 +78,18 @@
                         <td>
                             <input type="hidden" id="startTorrentHidden" name="paused" />
                             <input type="checkbox" id="startTorrent" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="stopCondition">QBT_TR(Stop condition:)QBT_TR[CONTEXT=AddNewTorrentDialog]</label>
+                        </td>
+                        <td>
+                            <select id="stopCondition" name="stopCondition">
+                                <option selected value="None">QBT_TR(None)QBT_TR[CONTEXT=AddNewTorrentDialog]</option>
+                                <option value="MetadataReceived">QBT_TR(Metadata received)QBT_TR[CONTEXT=AddNewTorrentDialog]</option>
+                                <option value="FilesChecked">QBT_TR(Files checked)QBT_TR[CONTEXT=AddNewTorrentDialog]</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>

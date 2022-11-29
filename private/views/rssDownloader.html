@@ -1,3 +1,134 @@
+<style>
+    #rssdownloaderpage_content {
+        height: calc(100% - 30px);
+    }
+
+    #RssDownloader {
+        height: 100%;
+    }
+
+    #leftRssDownloaderColumn {
+        width: 25%;
+        float: left;
+    }
+
+    #rulesTable,
+    #rssDownloaderArticlesTable {
+        overflow: auto;
+        width: 100%;
+        height: 100%;
+    }
+
+    #centerRssDownloaderColumn {
+        width: 50%;
+        float: left;
+    }
+
+    #rightRssDownloaderColumn {
+        width: 25%;
+        float: left;
+    }
+
+    .fullWidth {
+        width: 100%;
+        max-width: none;
+        box-sizing: border-box;
+    }
+
+    .noWrap {
+        white-space: nowrap;
+    }
+
+    #rssDownloaderFeeds {
+        height: calc(100% - 355px);
+        overflow: hidden;
+    }
+
+    #rssDownloaderFeedsTable {
+        height: calc(100% - 21px);
+        width: 100%;
+        overflow: auto;
+    }
+
+    #saveButton {
+        margin-top: 5px;
+        width: 100%;
+    }
+
+    .articleTableFeed td {
+        font-weight: bold;
+    }
+
+    .articleTableArticle td {
+        padding-left: 22px;
+    }
+
+    #rssDownloaderDisabled {
+        color: red;
+        font-style: italic;
+        margin-bottom: 10px;
+    }
+
+    #rulesTable table,
+    #rssDownloaderFeedsTable table,
+    #rssDownloaderArticlesTable table {
+        width: 100%;
+    }
+
+    #ignoreDaysValue {
+        width: 4em;
+    }
+
+    #lastMatchDiv {
+        float: right;
+    }
+
+    #ruleSettings {
+        padding: 4px 10px 4px 10px
+    }
+
+    #topMenuBar {
+        height: 26px;
+    }
+
+    #rulesTableDesc {
+        vertical-align: middle;
+    }
+
+    .imageButton {
+        height: 22px;
+        width: 24px;
+        margin: 1px 2px 1px 2px;
+        border: 1px solid;
+        border-radius: 2px;
+        background-color: #efefef;
+        border-color: #767676;
+        background-position: center center;
+        vertical-align: middle;
+    }
+
+    .imageButton:hover {
+        background-color: #e5e5e5;
+        border-color: #4f4f4f;
+    }
+
+    .imageButton:active {
+        background-color: #f5f5f5;
+        border-color: #8d8d8d;
+    }
+
+    #newRuleButton {
+        float: right;
+        background-image: url('images/list-add.svg');
+    }
+
+    #deleteRuleButton {
+        float: right;
+        background-image: url('images/edit-clear.svg');
+    }
+
+</style>
+
 <div id="RssDownloader" class="RssDownloader">
     <div id="rssDownloaderDisabled" class="invisible">
         QBT_TR(Auto downloading of RSS torrents is disabled now! You can enable it in application settings.)QBT_TR[CONTEXT=AutomatedRssDownloader]
@@ -181,10 +312,10 @@ Supports the formats: S01E01, 1x1, 2017.12.31 and 31.12.2017 (Date formats also 
 </div>
 
 <ul id="rssDownloaderRuleMenu" class="contextMenu">
-    <li><a href="#addRule"><img src="icons/document-new.svg" alt="QBT_TR(Add new rule...)QBT_TR[CONTEXT=AutomatedRssDownloader]" /> QBT_TR(Add new rule...)QBT_TR[CONTEXT=AutomatedRssDownloader]</a></li>
-    <li><a href="#deleteRule"><img src="icons/list-remove.svg" alt="QBT_TR(Delete rule)QBT_TR[CONTEXT=AutomatedRssDownloader]" /> QBT_TR(Delete rule)QBT_TR[CONTEXT=AutomatedRssDownloader]</a></li>
-    <li class="separator"><a href="#renameRule"><img src="icons/edit-rename.svg" alt="QBT_TR(Rename rule...)QBT_TR[CONTEXT=AutomatedRssDownloader]" /> QBT_TR(Rename rule...)QBT_TR[CONTEXT=AutomatedRssDownloader]</a></li>
-    <li class="separator"><a href="#clearDownloadedEpisodes"><img src="icons/edit-clear.svg" alt="QBT_TR(Clear downloaded episodes...)QBT_TR[CONTEXT=AutomatedRssDownloader]" /> QBT_TR(Clear downloaded episodes...)QBT_TR[CONTEXT=AutomatedRssDownloader]</a></li>
+    <li><a href="#addRule"><img src="images/list-add.svg" alt="QBT_TR(Add new rule...)QBT_TR[CONTEXT=AutomatedRssDownloader]" /> QBT_TR(Add new rule...)QBT_TR[CONTEXT=AutomatedRssDownloader]</a></li>
+    <li><a href="#deleteRule"><img src="images/edit-clear.svg" alt="QBT_TR(Delete rule)QBT_TR[CONTEXT=AutomatedRssDownloader]" /> QBT_TR(Delete rule)QBT_TR[CONTEXT=AutomatedRssDownloader]</a></li>
+    <li class="separator"><a href="#renameRule"><img src="images/edit-rename.svg" alt="QBT_TR(Rename rule...)QBT_TR[CONTEXT=AutomatedRssDownloader]" /> QBT_TR(Rename rule...)QBT_TR[CONTEXT=AutomatedRssDownloader]</a></li>
+    <li class="separator"><a href="#clearDownloadedEpisodes"><img src="images/edit-clear.svg" alt="QBT_TR(Clear downloaded episodes...)QBT_TR[CONTEXT=AutomatedRssDownloader]" /> QBT_TR(Clear downloaded episodes...)QBT_TR[CONTEXT=AutomatedRssDownloader]</a></li>
 </ul>
 
 <script>
@@ -283,14 +414,14 @@ Supports the formats: S01E01, 1x1, 2017.12.31 and 31.12.2017 (Date formats also 
             $('rulesTable').addEventListener('click', (e) => {
                 rssDownloaderRulesTable.deselectAll();
                 rssDownloaderRulesTable.deselectRow();
-                showRule('')
+                showRule('');
             });
             $('rulesTable').addEventListener('contextmenu', (e) => {
                 if (e.toElement.nodeName === 'DIV') {
                     rssDownloaderRulesTable.deselectAll();
                     rssDownloaderRulesTable.deselectRow();
                     rssDownloaderRuleContextMenu.updateMenuItems();
-                    showRule('')
+                    showRule('');
                 }
             });
             // get all categories and add to combobox
@@ -311,7 +442,7 @@ Supports the formats: S01E01, 1x1, 2017.12.31 and 31.12.2017 (Date formats also 
             new Request.JSON({
                 url: 'api/v2/rss/items',
                 noCache: true,
-                method: 'post',
+                method: 'get',
                 data: {
                     withData: false
                 },
@@ -324,7 +455,7 @@ Supports the formats: S01E01, 1x1, 2017.12.31 and 31.12.2017 (Date formats also 
                             else
                                 flatten(root[child]);
                         }
-                    }
+                    };
                     flatten(response);
                 }
             }).send();
@@ -354,7 +485,7 @@ Supports the formats: S01E01, 1x1, 2017.12.31 and 31.12.2017 (Date formats also 
                     rulesList = response;
                 }
             }).send();
-        }
+        };
 
         const modifyRuleState = (rule, setting, newState, callback = () => {}) => {
             rulesList[rule][setting] = newState;
@@ -370,7 +501,7 @@ Supports the formats: S01E01, 1x1, 2017.12.31 and 31.12.2017 (Date formats also 
                     callback();
                 }
             }).send();
-        }
+        };
 
         const addRule = () => {
             new MochaUI.Window({
@@ -435,7 +566,7 @@ Supports the formats: S01E01, 1x1, 2017.12.31 and 31.12.2017 (Date formats also 
                 width: 350,
                 height: 85
             });
-        }
+        };
 
         const saveSettings = () => {
             let lastSelectedRow = rssDownloaderRulesTable.selectedRows[rssDownloaderRulesTable.selectedRows.length - 1];
@@ -493,13 +624,13 @@ Supports the formats: S01E01, 1x1, 2017.12.31 and 31.12.2017 (Date formats also 
                     updateMatchingArticles(rule);
                 }
             }).send();
-        }
+        };
 
         const updateMatchingArticles = (ruleName) => {
             new Request.JSON({
                 url: 'api/v2/rss/matchingArticles',
                 noCache: true,
-                method: 'post',
+                method: 'get',
                 data: {
                     ruleName: ruleName
                 },
@@ -523,7 +654,7 @@ Supports the formats: S01E01, 1x1, 2017.12.31 and 31.12.2017 (Date formats also 
                     rssDownloaderArticlesTable.updateTable(false);
                 }
             }).send();
-        }
+        };
 
         const showRule = (ruleName) => {
             if (ruleName === '') {
@@ -551,7 +682,7 @@ Supports the formats: S01E01, 1x1, 2017.12.31 and 31.12.2017 (Date formats also 
                 $('savetoDifferentDir').checked = false;
                 $('saveToText').value = '';
                 $('ignoreDaysValue').value = 0;
-                $('lastMatchText').innerHTML = 'QBT_TR(Last Match: Unknown)QBT_TR[CONTEXT=AutomatedRssDownloader]';
+                $('lastMatchText').textContent = 'QBT_TR(Last Match: Unknown)QBT_TR[CONTEXT=AutomatedRssDownloader]';
                 $('addPausedCombobox').value = 'default';
                 $('contentLayoutCombobox').value = 'Default';
                 rssDownloaderFeedSelectionTable.clear();
@@ -593,10 +724,10 @@ Supports the formats: S01E01, 1x1, 2017.12.31 and 31.12.2017 (Date formats also 
                 if (rulesList[ruleName].lastMatch !== '') {
                     let timeDiffInMs = new Date().getTime() - new Date(rulesList[ruleName].lastMatch).getTime();
                     let daysAgo = Math.floor(timeDiffInMs / (1000 * 60 * 60 * 24)).toString();
-                    $('lastMatchText').innerHTML = ' QBT_TR(Last Match: %1 days ago)QBT_TR[CONTEXT=AutomatedRssDownloader]'.replace('%1', daysAgo);
+                    $('lastMatchText').textContent = ' QBT_TR(Last Match: %1 days ago)QBT_TR[CONTEXT=AutomatedRssDownloader]'.replace('%1', daysAgo);
                 }
                 else {
-                    $('lastMatchText').innerHTML = 'QBT_TR(Last Match: Unknown)QBT_TR[CONTEXT=AutomatedRssDownloader]';
+                    $('lastMatchText').textContent = 'QBT_TR(Last Match: Unknown)QBT_TR[CONTEXT=AutomatedRssDownloader]';
                 }
 
                 if (rulesList[ruleName].addPaused === null)
@@ -624,7 +755,7 @@ Supports the formats: S01E01, 1x1, 2017.12.31 and 31.12.2017 (Date formats also 
                 rssDownloaderFeedSelectionTable.updateTable(false);
                 updateMatchingArticles(ruleName);
             }
-        }
+        };
 
         const setElementTitles = () => {
             let mainPart;
@@ -660,9 +791,11 @@ Supports the formats: S01E01, 1x1, 2017.12.31 and 31.12.2017 (Date formats also 
 
             episodeFilterTitle = episodeFilterTitle.replace(/<b>/g, '').replace(/<\/b>/g, '');
             $('episodeFilterText').title = episodeFilterTitle;
-        }
+        };
 
         initRssDownloader();
         return exports();
     })();
+
+    Object.freeze(window.qBittorrent.RssDownloader);
 </script>

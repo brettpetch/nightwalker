@@ -50,7 +50,7 @@ window.qBittorrent.PropTrackers = (function() {
             // Tab changed, don't do anything
             return;
         }
-        const new_hash = torrentsTable.getCurrentTorrentHash();
+        const new_hash = torrentsTable.getCurrentTorrentID();
         if (new_hash === "") {
             torrentTrackersTable.clear();
             clearTimeout(loadTrackersDataTimer);
@@ -97,7 +97,7 @@ window.qBittorrent.PropTrackers = (function() {
 
                         const row = {
                             rowId: tracker.url,
-                            tier: tracker.tier,
+                            tier: (tracker.tier >= 0) ? tracker.tier : "",
                             url: tracker.url,
                             status: status,
                             peers: tracker.num_peers,
@@ -165,10 +165,11 @@ window.qBittorrent.PropTrackers = (function() {
     });
 
     const addTrackerFN = function() {
-        if (current_hash.length === 0) return;
+        if (current_hash.length === 0)
+            return;
         new MochaUI.Window({
             id: 'trackersPage',
-            title: "QBT_TR(Trackers addition dialog)QBT_TR[CONTEXT=TrackersAdditionDialog]",
+            title: "QBT_TR(Add trackers)QBT_TR[CONTEXT=TrackersAdditionDialog]",
             loadMethod: 'iframe',
             contentURL: 'addtrackers.html?hash=' + current_hash,
             scrollbars: true,
@@ -186,7 +187,8 @@ window.qBittorrent.PropTrackers = (function() {
     };
 
     const editTrackerFN = function(element) {
-        if (current_hash.length === 0) return;
+        if (current_hash.length === 0)
+            return;
 
         const trackerUrl = encodeURIComponent(element.childNodes[1].innerText);
         new MochaUI.Window({
@@ -209,7 +211,8 @@ window.qBittorrent.PropTrackers = (function() {
     };
 
     const removeTrackerFN = function(element) {
-        if (current_hash.length === 0) return;
+        if (current_hash.length === 0)
+            return;
 
         const selectedTrackers = torrentTrackersTable.selectedRowsIds();
         new Request({
@@ -235,3 +238,5 @@ window.qBittorrent.PropTrackers = (function() {
 
     return exports();
 })();
+
+Object.freeze(window.qBittorrent.PropTrackers);
